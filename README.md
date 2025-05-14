@@ -7,26 +7,21 @@ A mini Spring Boot project to explore and demonstrate threading concepts includi
 
 ## 🚀 Features Covered
 
-- `@Async` for executing methods in background threads
-- Custom `ThreadPoolTaskExecutor` configuration
-- `@Scheduled` for periodic and delayed tasks
-- `CompletableFuture` for async return values and chaining
-- Manual task submission with `ExecutorService`
-- Exception handling in async methods
-- Graceful shutdown using `@PreDestroy`
-- Integration of **virtual threads** (Java 21+)
-
+This project helps understand and compare:
+- High-level async programming in Spring Boot
+- Manual thread creation using native Java (`Thread`, `Runnable`, `Executor`)
+- Task tracking, scheduling, and thread pool configuration
+- Graceful shutdown of async executors
 ---
 
 ## 📦 Endpoints
 
-| Method | Endpoint               | Description                              |
-|--------|------------------------|------------------------------------------|
-| POST   | `/tasks/async`         | Launches a fake long-running async task  |
-| GET    | `/tasks/status/{id}`   | Returns the result or status of a task   |
-| POST   | `/tasks/error`         | Simulates a failing async task           |
-| GET    | `/tasks/manual`        | Submits a manual task via executor       |
-| GET    | `/health/ping`         | Simple ping endpoint (can trigger logs)  |
+| Method | Endpoint             | Description                                |
+| ------ | -------------------- | ------------------------------------------ |
+| POST   | `/tasks/start`       | Start async task and return task ID        |
+| GET    | `/tasks/status/{id}` | Check status of a running task             |
+| GET    | `/tasks/async`       | Trigger a basic async task (no tracking)   |
+| GET    | `/threads/raw`       | Run examples using Java’s native threading |
 
 ---
 
