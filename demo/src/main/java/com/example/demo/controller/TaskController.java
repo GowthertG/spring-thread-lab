@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.AsyncTaskService;
+import com.example.demo.service.RawThreadExample;
 import com.example.demo.service.TaskStatusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +30,10 @@ public class TaskController {
             return Map.of("status", "UNKNOWN");
         }
         return Map.of("status", status.name());
+    }
+    @GetMapping("/threads/raw")
+    public String runRawThreadExamples() {
+        RawThreadExample.runAllExamples();
+        return "All raw thread examples started";
     }
 }
