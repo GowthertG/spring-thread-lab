@@ -44,7 +44,7 @@ A mini Spring Boot project to explore and demonstrate threading concepts includi
 
 ```bash
 # clone the repo
-git clone https://github.com/your-username/spring-thread-lab.git
+git clone https://github.com/GowthertG/spring-thread-lab.git
 cd spring-thread-lab
 
 # run with Maven
