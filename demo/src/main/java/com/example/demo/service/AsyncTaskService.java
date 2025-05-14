@@ -1,23 +1,30 @@
 package com.example.demo.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CompletableFuture;
+
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class AsyncTaskService {
 
+    private final TaskStatusService taskStatusService;
+
     @Async
-    public void runHeavyTask() {
-        log.info("Started async task on thread: {}", Thread.currentThread().getName());
+    public CompletableFuture<Void> runTaskWithId(String taskId) {
+        log.info("Task {} started on thread {}", taskId, Thread.currentThread().getName());
         try {
-            Thread.sleep(5000); // simulate long processing
+
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            log.error("Task was interrupted", e);
         }
-        log.info("Finished async task on thread: {}", Thread.currentThread().getName());
+        log.info("Task {} finished", taskId);
+        taskStatusService.markCompleted(taskId);
+        return CompletableFuture.completedFuture(null);
     }
 }
-
