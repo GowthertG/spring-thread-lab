@@ -31,4 +31,16 @@ public class AsyncTaskService {
     public void taskThatFails() {
         throw new RuntimeException("Simulated async failure");
     }
+    @Async
+    public CompletableFuture<String> taskWithTimeout() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(10000); // Simulate long task (10s)
+                return "Finished successfully";
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return "Interrupted";
+            }
+        }).orTimeout(3, java.util.concurrent.TimeUnit.SECONDS);
+    }
 }
