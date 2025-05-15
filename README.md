@@ -8,20 +8,27 @@ A mini Spring Boot project to explore and demonstrate threading concepts includi
 ## 🚀 Features Covered
 
 This project helps understand and compare:
-- High-level async programming in Spring Boot
+- High-level async programming in Spring Boot (`@Async`)
+- Task tracking with `CompletableFuture` and status endpoints
+- Manual task cancellation using `Future.cancel()`
+- Task timeouts using `CompletableFuture.orTimeout(...)`
+- Exception handling in `@Async` methods
+- Periodic execution with `@Scheduled`
 - Manual thread creation using native Java (`Thread`, `Runnable`, `Executor`)
-- Task tracking, scheduling, and thread pool configuration
-- Graceful shutdown of async executors
+- Thread pool configuration and graceful shutdown
+
 ---
 
 ## 📦 Endpoints
 
-| Method | Endpoint             | Description                                |
-| ------ | -------------------- | ------------------------------------------ |
-| POST   | `/tasks/start`       | Start async task and return task ID        |
-| GET    | `/tasks/status/{id}` | Check status of a running task             |
-| GET    | `/tasks/async`       | Trigger a basic async task (no tracking)   |
-| GET    | `/threads/raw`       | Run examples using Java’s native threading |
+| Method | Endpoint               | Description                                 |
+|--------|------------------------|---------------------------------------------|
+| POST   | `/tasks/start`         | Start async task and return task ID         |
+| GET    | `/tasks/status/{id}`   | Check status of a running task              |
+| DELETE | `/tasks/cancel/{id}`   | Cancel a running task                       |
+| GET    | `/tasks/timeout`       | Run a task that fails if it takes too long  |
+| GET    | `/tasks/fail`          | Trigger a task that throws an exception     |
+| GET    | `/threads/raw`         | Run examples using Java’s native threading  |
 
 ---
 
