@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,6 +41,11 @@ public class TaskController {
     public String triggerFailingTask() {
         asyncTaskService.taskThatFails();
         return "Failing async task triggered.";
+    }
+    @GetMapping("/timeout")
+    public CompletableFuture<String> triggerTimeout() {
+        return asyncTaskService.taskWithTimeout()
+                .exceptionally(ex -> "Task failed: " + ex.getMessage());
     }
 
 }
