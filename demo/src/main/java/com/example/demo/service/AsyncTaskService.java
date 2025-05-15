@@ -15,17 +15,19 @@ public class AsyncTaskService {
     private final TaskStatusService taskStatusService;
 
     @Async
-    public CompletableFuture<Void> runTaskWithId(String taskId) {
-        log.info("Task {} started on thread {}", taskId, Thread.currentThread().getName());
-        try {
+    public void runTaskWithId(String taskId) {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(10000); // simulate long task
+                log.info("Task {} completed", taskId);
+                taskStatusService.markCompleted(taskId);
+            } catch (InterruptedException e) {
+                log.warn("Task {} was interrupted", taskId);
+                Thread.currentThread().interrupt();
+            }
+        });
 
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        log.info("Task {} finished", taskId);
-        taskStatusService.markCompleted(taskId);
-        return CompletableFuture.completedFuture(null);
+        taskStatusService.setFuture(taskId, future);
     }
     @Async
     public void taskThatFails() {

@@ -47,5 +47,10 @@ public class TaskController {
         return asyncTaskService.taskWithTimeout()
                 .exceptionally(ex -> "Task failed: " + ex.getMessage());
     }
+    @DeleteMapping("/cancel/{id}")
+    public Map<String, String> cancelTask(@PathVariable String id) {
+        boolean result = taskStatusService.cancelTask(id);
+        return Map.of("cancelled", String.valueOf(result));
+    }
 
 }
