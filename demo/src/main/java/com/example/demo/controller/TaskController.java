@@ -36,4 +36,10 @@ public class TaskController {
         RawThreadExample.runAllExamples();
         return "All raw thread examples started";
     }
+    @GetMapping("/fail")
+    public String triggerFailingTask() {
+        asyncTaskService.taskThatFails();
+        return "Failing async task triggered.";
+    }
+
 }
