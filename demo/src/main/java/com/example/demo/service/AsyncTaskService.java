@@ -27,4 +27,8 @@ public class AsyncTaskService {
         taskStatusService.markCompleted(taskId);
         return CompletableFuture.completedFuture(null);
     }
+    @Async
+    public void taskThatFails() {
+        throw new RuntimeException("Simulated async failure");
+    }
 }
